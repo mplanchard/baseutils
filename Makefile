@@ -1,13 +1,14 @@
 VENV = . ./venv/bin/activate;
+PKG_DIR = src
+TEST_DIR = tests
 TEST = pytest \
 	--cov-config=setup.cfg \
 	--cov-report=xml:.coverage.xml \
 	--cov-report=term \
 	--cov=baseutils \
 	--junit-xml=.pytest.xml \
-	tests
-PKG_DIR = src
-TEST_DIR = tests
+	$(PKG_DIR) \
+	$(TEST_DIR)
 SRC_FILES = *.py $(PKG_DIR) $(TEST_DIR)
 
 .PHONY: bench build clean distribute fmt lint test
@@ -48,7 +49,6 @@ clean:
 # Requires VERSION to be set on the CLI or in an environment variable,
 # e.g. make VERSION=1.0.0 distribute
 distribute: build
-	$(VENV) scripts/check_ready_to_distribute.py $(VERSION)
 	git tag -s "v$(VERSION)"
 	$(VENV) twine upload -s dist/*
 	git push --tags
