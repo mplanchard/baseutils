@@ -8,6 +8,12 @@ T = t.TypeVar("T")
 U = t.TypeVar("U")
 
 
+def first(items: t.Iterable[T]) -> t.Optional[T]:
+    """Return the first item from items, or None."""
+    just_first = tuple(take(1, items))
+    return None if len(just_first) == 0 else just_first[0]
+
+
 def for_each(fn: t.Callable[[T], t.Any], items: t.Iterable[T]) -> None:
     """Call the function on each of the provided items.
 

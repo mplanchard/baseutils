@@ -4,7 +4,7 @@ import typing as t
 
 import pytest
 
-from baseutils.iter import for_each, take
+from baseutils.iter import first, for_each, take
 
 
 @pytest.mark.parametrize(
@@ -37,3 +37,18 @@ def test_for_each(iterable: t.Iterable[int], exp: t.List[int]) -> None:
 def test_take(iterable: t.Iterable[t.Any], n: int, exp: t.List[t.Any]) -> None:
     """It takes items out of an iterator if available."""
     assert list(take(n, iterable)) == exp
+
+
+@pytest.mark.parametrize(
+    "iterable, exp",
+    (
+        ([], None),
+        ((), None),
+        (iter(()), None),
+        (range(1000), 0),
+        ((1, 2, 3), 1),
+    ),
+)
+def test_first(iterable: t.Iterable[t.Any], exp: t.Any) -> None:
+    """It takes the first item or returns None otherwise."""
+    assert first(iterable) == exp
