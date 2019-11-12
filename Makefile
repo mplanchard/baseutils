@@ -11,14 +11,13 @@ TEST = pytest \
 	$(TEST_DIR)
 SRC_FILES = *.py $(PKG_DIR) $(TEST_DIR)
 
-.PHONY: bench build clean distribute fmt lint test
+.PHONY: bench build clean dev distribute fmt lint setup test
 
 all: fmt lint test
 
 venv: venv/bin/activate
 venv/bin/activate: setup.py
 	python3 -m venv venv
-	$(VENV) pip install -e .[dev]
 	touch venv/bin/activate
 
 
@@ -46,6 +45,9 @@ clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
+dev: venv-clean venv
+	$(VENV) pip install -e .[dev]
+
 # Requires VERSION to be set on the CLI or in an environment variable,
 # e.g. make VERSION=1.0.0 distribute
 distribute: build
@@ -64,11 +66,14 @@ lint: venv
 	$(VENV) mypy $(SRC_FILES)
 
 setup: venv-clean venv
+	$(VENV) pip install -e .[dev]
 
 test: venv
+	$(VENV) pip install -e .[test]
 	$(VENV) $(TEST)
 
 tox: venv
+	$(VENV) pip install -e .[test]
 	TOXENV=$(TOXENV) tox
 
 test-3.6:
@@ -86,5 +91,5 @@ test-3.8:
 test-all-versions: test-3.6 test-3.7 test-3.8
 
 bench: venv
-	source venv/bin/activate; bench/runner.sh
-
+	$(VENV) pip install -e .[dev]
+	$(VENV) bench/runner.sh
