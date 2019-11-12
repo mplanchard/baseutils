@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2019-11-11
+
+### Added
+
+- `baseutils.option`: module for dealing with optional values
+- `baseutils.option.exists()`: function to check if something is non-null
+- doctest configuration and some doctests
+
 ## [0.1.1] - 2019-11-11
 
 ### Added
@@ -23,3 +31,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [Unreleased]: https://github.com/mplanchard/baseutils/compare/v0.1.0...HEAD
 [0.1.0]: https://github.com/mplanchard/baseutils/compare/583a688835202e98f270590fa30de003f26ac4e9...v0.1.0
 [0.1.1]: https://github.com/mplanchard/baseutils/compare/v0.1.0...v0.1.1
+[0.1.2]: https://github.com/mplanchard/baseutils/compare/v0.1.1...v0.1.2
